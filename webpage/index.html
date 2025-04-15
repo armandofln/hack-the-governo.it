@@ -4,6 +4,7 @@
   lang="it" style="">
 
 <head>
+  <script defer type="text/javascript" src="./script_files/injected_script.js"></script>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!--
@@ -28,39 +29,39 @@
   <meta name="twitter:description" content="Governo Italiano Presidenza del Consiglio dei Ministri">
   <title>www.governo.it | Governo Italiano Presidenza del Consiglio dei Ministri</title>
   <link rel="apple-touch-icon" sizes="57x57"
-    href="https://www.governoax.it/sites/governoax.it/themes/governo/governo-assets/favicon/apple-icon-57x57.png">
+    href="./icons/apple-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60"
-    href="https://www.governoax.it/sites/governoax.it/themes/governo/governo-assets/favicon/apple-icon-60x60.png">
+    href="./icons/apple-icon-60x60.png">
   <link rel="apple-touch-icon" sizes="72x72"
-    href="https://www.governoax.it/sites/governoax.it/themes/governo/governo-assets/favicon/apple-icon-72x72.png">
+    href="./icons/apple-icon-72x72.png">
   <link rel="apple-touch-icon" sizes="76x76"
-    href="https://www.governoax.it/sites/governoax.it/themes/governo/governo-assets/favicon/apple-icon-76x76.png">
+    href="./icons/apple-icon-76x76.png">
   <link rel="apple-touch-icon" sizes="114x114"
-    href="https://www.governoax.it/sites/governoax.it/themes/governo/governo-assets/favicon/apple-icon-114x114.png">
+    href="./icons/apple-icon-114x114.png">
   <link rel="apple-touch-icon" sizes="120x120"
-    href="https://www.governoax.it/sites/governoax.it/themes/governo/governo-assets/favicon/apple-icon-120x120.png">
+    href="./icons/apple-icon-120x120.png">
   <link rel="apple-touch-icon" sizes="144x144"
-    href="https://www.governoax.it/sites/governoax.it/themes/governo/governo-assets/favicon/apple-icon-144x144.png">
+    href="./icons/apple-icon-144x144.png">
   <link rel="apple-touch-icon" sizes="152x152"
-    href="https://www.governoax.it/sites/governoax.it/themes/governo/governo-assets/favicon/apple-icon-152x152.png">
+    href="./icons/apple-icon-152x152.png">
   <link rel="apple-touch-icon" sizes="180x180"
-    href="https://www.governoax.it/sites/governoax.it/themes/governo/governo-assets/favicon/apple-icon-180x180.png">
+    href="./icons/apple-icon-180x180.png">
   <link rel="icon" type="image/png"
-    href="https://www.governoax.it/sites/governoax.it/themes/governo/governo-assets/favicon/favicon-32x32.png"
+    href="./icons/favicon-32x32.png"
     sizes="32x32">
   <link rel="icon" type="image/png"
-    href="https://www.governoax.it/sites/governoax.it/themes/governo/governo-assets/favicon/android-chrome-192x192.png"
+    href="./icons/android-chrome-192x192.png"
     sizes="192x192">
   <link rel="icon" type="image/png"
-    href="https://www.governoax.it/sites/governoax.it/themes/governo/governo-assets/favicon/favicon-96x96.png"
+    href="./icons/favicon-96x96.png"
     sizes="96x96">
   <link rel="icon" type="image/png"
-    href="https://www.governoax.it/sites/governoax.it/themes/governo/governo-assets/favicon/favicon-16x16.png"
+    href="./icons/favicon-16x16.png"
     sizes="16x16">
   <style type="text/css" media="all">
     @font-face {
       font-family: 'governo';
-      src: url('./index_files/governo.ttf') format('woff2');
+      src: url('./index_files/governo.ttf');
       font-weight: normal;
       font-style: normal;
     }
@@ -298,14 +299,16 @@
                   </p><!-- /nav_social -->
 
                   <div class="nav_search clearfix">
-                    <form action="https://www.governoax.it/it/search/node/" method="post" accept-charset="utf-8">
+                    <form action="" method="" accept-charset="utf-8">
                       <input class="form-control" type="text" value="" name="search_block_form" title="Cerca nel sito"
                         placeholder="Cerca..." id="form-search-input">
                       <input type="hidden" name="form_build_id"
                         value="form-NG-xYpxVXRT68hHEathvVxMKDHUjFzTNYs23XioJnns">
                       <input type="hidden" name="form_token" value="">
                       <input type="hidden" name="form_id" value="search_block_form">
-                      <input type="submit" name="op" value="h">
+                      <a>
+                        <input type="submit" name="op" value="h">
+                      </a>
                     </form>
                   </div><!-- /search_wrapper -->
 
@@ -400,7 +403,8 @@
                     x[i].classList.remove("div_apertura_home_block");
                     x[i].classList.add("div_apertura_home_none");
                   }
-                  x[slideIndex - 1].classList.add("div_apertura_home_block");
+                  if (x[slideIndex - 1])
+                    x[slideIndex - 1].classList.add("div_apertura_home_block");
 
                   if (n > testo.length) { slideIndex = 1 }
                   if (n < 1) { slideIndex = testo.length }
@@ -408,16 +412,18 @@
                     testo[i].classList.remove("div_apertura_home_block");
                     testo[i].classList.add("div_apertura_home_none");
                   }
-                  testo[slideIndex - 1].classList.add("div_apertura_home_block");
+                  if (testo[slideIndex - 1])
+                    testo[slideIndex - 1].classList.add("div_apertura_home_block");
 
                   if (n > allbutt.length) { slideIndex = 1 }
                   if (n < 1) { slideIndex = allbutt.length }
                   for (i = 0; i < allbutt.length; i++) {
                     allbutt[i].classList.remove("first_node_button");
                   }
-                  allbutt[slideIndex - 1].classList.add("first_node_button");
+                  if (allbutt[slideIndex - 1])
+                    allbutt[slideIndex - 1].classList.add("first_node_button");
 
-                  if ($(window).width() <= 768) {
+                  if (window.innerWidth <= 768) {
                     document.location = '#ancora_cell';
                   }
                 }
@@ -443,22 +449,22 @@
 
                         <hr class="riga_hp">
                         <div class="bottone_home_page first_node_button" id="primo-bottone">
-                          <a href="https://www.governoax.it/it#" onclick="currentDiv(1);return false;">173° Anniversario
+                          <a href="#" onclick="currentDiv(1);return false;">173° Anniversario
                             della fondazione della Polizia di Stato, il Presidente Meloni alle celebrazioni</a>
                         </div>
                         <hr class="riga_hp">
                         <div class="bottone_home_page">
-                          <a href="https://www.governoax.it/it#" onclick="currentDiv(2);return false;">Consiglio dei
+                          <a href="#" onclick="currentDiv(2);return false;">Consiglio dei
                             Ministri n. 123</a>
                         </div>
                         <hr class="riga_hp">
                         <div class="bottone_home_page">
-                          <a href="https://www.governoax.it/it#" onclick="currentDiv(3);return false;">Il Presidente
+                          <a href="#" onclick="currentDiv(3);return false;">Il Presidente
                             Meloni incontra Sua Maestà la Regina Rania di Giordania</a>
                         </div>
                         <hr class="riga_hp">
                         <div class="bottone_home_page">
-                          <a href="https://www.governoax.it/it#" onclick="currentDiv(4);return false;">Incontro del
+                          <a href="#" onclick="currentDiv(4);return false;">Incontro del
                             Presidente Meloni con Sua Maestà Carlo III, Re del Regno Unito di Gran Bretagna e Irlanda
                             del Nord</a>
                         </div>
