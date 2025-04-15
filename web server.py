@@ -1,13 +1,25 @@
-import http.server
-import socketserver
-import os
+from os.path import join, exists, isdir
+from flask import Flask, send_from_directory
 
-DIRECTORY = "webpage"
+app = Flask(__name__)
 
-os.chdir(DIRECTORY)
+STATIC_PATH = "webpage"
 
-Handler = http.server.SimpleHTTPRequestHandler
-#Handler.directory = DIRECTORY
+@app.route("/")
+def home():
+	return send_from_directory(STATIC_PATH, 'index.html')
 
-with socketserver.TCPServer(("", 80), Handler) as httpd:
-    httpd.serve_forever()
+@app.route("/hacked")
+def hacked():
+	return "CRA"
+
+@app.route("/<path:path>")
+def catch_everything_else(path):
+	full_path = join(STATIC_PATH, path)
+	if exists(full_path) and not isdir(full_path):
+		return send_from_directory(STATIC_PATH, path)
+	else:
+		return home()
+
+if __name__ == "__main__":
+	app.run(debug=True, port=80)
