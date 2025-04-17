@@ -22,4 +22,4 @@ def catch_everything_else(path):
 		return home()
 
 if __name__ == "__main__":
-	app.run(debug=True, port=80)
+	app.run(debug=True, port=80, host="0.0.0.0")
