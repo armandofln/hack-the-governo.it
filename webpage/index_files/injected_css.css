@@ -1,0 +1,54 @@
+#hacked {
+	position: fixed;
+	top: -100vh;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: transparent;
+	z-index: 1000;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+}
+
+#hacked > img {
+	max-width: 95%;
+	max-height: 100%;
+	object-fit: contain;
+}
+
+.hacked-text {
+	position: absolute;
+	z-index: 2;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+}
+
+.hacked-text span {
+	color: red;
+	font-size: 7rem;
+	font-weight: 900;
+	text-align: center;
+	font-family: 'Courier New', Courier, monospace;
+	text-shadow:
+		0 0 3px #ff0000,
+		0 0 6px #ff0000,
+		0 0 9px #ff0000,
+		0 0 12px #ff0000;
+	background: transparent;
+	animation: pulse 0.5s ease-in-out infinite;
+}
+
+
+@keyframes pulse {
+	0% {opacity: 0.7;}
+
+	50% {opacity: 1;}
+
+	100% {opacity: 0.7;}
+}

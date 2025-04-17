@@ -1,3 +1,2 @@
 .env
 webpage/script_files/*
-!webpage/script_files/injected_script.js
