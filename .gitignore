@@ -1,3 +1,4 @@
 .env
 webpage/script_files/*
 webpage/inject/*
+webpage/index.html
